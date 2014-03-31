@@ -11,6 +11,7 @@ class Options
             'title'     => 'Website URL',
             'default'   => null,
             'type'      => 'url',
+            'required'  => true,
         ),
         'bwidth' => array(
             'title'   => 'Browser width',
@@ -31,7 +32,7 @@ class Options
          */
         'swidth' => array(
             'title'   => 'Screenshot width',
-            'default' => 300,
+            'default' => null,
             'type'    => 'int',
             'min'     => 16,
             'max'     => 8192,
@@ -69,8 +70,14 @@ class Options
         foreach (static::$options as $name => $arOption) {
             $this->values[$name] = $arOption['default'];
             if (!isset($arValues[$name])) {
+                if (isset($arOption['required'])) {
+                    throw new \InvalidArgumentException(
+                        $name . ' parameter missing'
+                    );
+                }
                 continue;
             }
+
             if ($arOption['type'] == 'url') {
                 $this->values[$name] = $this->validateUrl($arValues[$name]);
             } else if ($arOption['type'] == 'int') {
@@ -100,6 +107,9 @@ class Options
 
     protected function calcPageSize()
     {
+        if ($this->values['swidth'] === null) {
+            $this->values['swidth'] = $this->values['bwidth'];
+        }
         if ($this->values['smode'] == 'page') {
             return;
         }
