@@ -1,0 +1,6 @@
+<?php
+//username => secret key
+$access = array(
+    'bar' => 'bar',
+);
+?>

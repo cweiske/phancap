@@ -13,13 +13,23 @@ if (file_exists(__DIR__ . '/../src/phancap/Autoloader.php')) {
 }
 
 $config = new Config();
-$config->setupCheck();
+$config->load();
 
 $options = new Options();
 try {
     $options->parse($_GET);
 } catch (\InvalidArgumentException $e) {
     header('HTTP/1.0 400 Bad Request');
+    header('Content-type: text/plain');
+    echo $e->getMessage() . "\n";
+    exit(1);
+}
+
+$auth = new Authenticator();
+try {
+    $auth->authenticate($config);
+} catch (\Exception $e) {
+    header('HTTP/1.0 401 Unauthorized');
     header('Content-type: text/plain');
     echo $e->getMessage() . "\n";
     exit(1);

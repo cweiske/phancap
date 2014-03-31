@@ -15,11 +15,45 @@ class Config
      */
     public $cacheDirUrl;
 
+    /**
+     * Credentials for access
+     * username => secret key (used for signature)
+     * @var array
+     */
+    public $access = false;
+
+    /**
+     * How long requests with an old timestamp may be used.
+     * 2 days default.
+     *
+     * @var integer
+     */
+    public $timestampLifetime = 172800;
+
 
     public function __construct()
     {
         $this->cacheDir    = getcwd() . '/imgcache/';
         $this->cacheDirUrl = $this->getCurrentUrlDir() . '/imgcache/';
+    }
+
+    public function load()
+    {
+        $cfgFile = __DIR__ . '/../../data/phancap.config.php';
+        if (file_exists($cfgFile)) {
+            $this->loadFile($cfgFile);
+        }
+
+        $this->setupCheck();
+    }
+
+    protected function loadFile($filename)
+    {
+        include $filename;
+        $vars = get_defined_vars();
+        foreach ($vars as $k => $value) {
+            $this->$k = $value;
+        }
     }
 
     public function setupCheck()

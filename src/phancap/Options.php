@@ -54,6 +54,24 @@ class Options
             'default' => 'screen',
             'type'    => array('screen', 'page'),
         ),
+        /**
+         * Authentication
+         */
+        'atimestamp' => array(
+            'title'   => 'Timestamp the request has been generated',
+            'default' => null,
+            'type'    => 'skip',
+        ),
+        'atoken' => array(
+            'title'   => 'Access token (user name)',
+            'default' => null,
+            'type'    => 'skip',
+        ),
+        'asignature' => array(
+            'title'   => 'Access signature',
+            'default' => null,
+            'type'    => 'skip',
+        ),
     );
 
     public $values = array();
@@ -88,7 +106,7 @@ class Options
                 $this->values[$name] = $this->validateArray(
                     $arValues[$name], $arOption['type']
                 );
-            } else {
+            } else if ($arOption['type'] != 'skip') {
                 throw new \InvalidArgumentException(
                     'Unsupported option type: ' . $arOption['type']
                 );
