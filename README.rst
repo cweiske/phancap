@@ -2,7 +2,7 @@
 phancap - website screenshot service
 ************************************
 
-Software to create screenshots and thumbnails of websites via an API.
+Web service to create website screenshots.
 
 Self-hosted and written in PHP. Caching included.
 
