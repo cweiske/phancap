@@ -7,6 +7,36 @@ Software to create screenshots and thumbnails of websites via an API.
 Self-hosted and written in PHP. Caching included.
 
 
+==============
+URL parameters
+==============
+``get.php`` supports the following parameters:
+
+``url``
+  Website URL
+``bwidth``
+  Browser width (default: 1024)
+``bheight``
+  Browser height (default: none)
+``swidth``
+  Screenshot width (default: none (no scaling))
+``sheight``
+  Screenshot height (default: none)
+``sformat``
+  Screenshot format (``png``, ``jpg``, ``pdf``, default: ``png``)
+``smode``
+  Screenshot mode (``screen`` (4:3) or ``page`` (full website height))
+
+
+============
+Dependencies
+============
+- `cutycapt <http://cutycapt.sourceforge.net/>`_
+- imagemagick's ``convert``
+- ``xvfb-run``
+
+
+
 =======================
 Technical brainstorming
 =======================
