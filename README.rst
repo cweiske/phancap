@@ -31,6 +31,17 @@ Screenshot parameters
   Screenshot format (``png``, ``jpg``, ``pdf``, default: ``png``)
 ``smode``
   Screenshot mode (``screen`` (4:3) or ``page`` (full website height))
+``smaxage``
+  Maximum age of screenshot in seconds.
+  ISO 8601 duration specifications accepted:
+
+  - ``P1Y`` - 1 year
+  - ``P2W`` - 2 weeks
+  - ``P1D`` - 1 day
+  - ``PT4H`` - 4 hours
+
+  The configuration file defines a minimum age that the user cannot undercut
+  (``$screenshotMinAge``), as well as a default value (``$screenshotMaxAge``).
 
 Authentication parameters
 =========================

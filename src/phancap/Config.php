@@ -17,10 +17,17 @@ class Config
 
     /**
      * Credentials for access
-     * username => secret key (used for signature)
-     * @var array
+     *
+     * Array of
+     *     username => secret key
+     * entries (used for signature).
+     *
+     * Boolean true to allow access in every case,
+     * false to completely disable it.
+     *
+     * @var array|boolean
      */
-    public $access = false;
+    public $access = true;
 
     /**
      * How long requests with an old timestamp may be used.
@@ -28,13 +35,38 @@ class Config
      *
      * @var integer
      */
-    public $timestampLifetime = 172800;
+    public $timestampMaxAge = 'P2D';
+
+    /**
+     * Cache time of downloaded screenshots.
+     * When the file is as older than this, it gets re-created.
+     * The user can override that using the "smaxage" parameter.
+     *
+     * Defaults to 1 week.
+     *
+     * @var integer Lifetime in seconds
+     */
+    public $screenshotMaxAge = 'P1W';
+
+    /**
+     * Minimum age of a screeshot.
+     * A user cannot set the max age parameter below it.
+     *
+     * Defaults to 1 hour.
+     *
+     * @var integer Minimum lifetime in seconds
+     */
+    public $screenshotMinAge = 'PT1H';
 
 
     public function __construct()
     {
         $this->cacheDir    = getcwd() . '/imgcache/';
         $this->cacheDirUrl = $this->getCurrentUrlDir() . '/imgcache/';
+
+        $this->timestampMaxAge  = Options::validateAge($this->timestampMaxAge);
+        $this->screenshotMaxAge = Options::validateAge($this->screenshotMaxAge);
+        $this->screenshotMinAge = Options::validateAge($this->screenshotMinAge);
     }
 
     public function load()

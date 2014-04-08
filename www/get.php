@@ -17,6 +17,7 @@ $config->load();
 
 $options = new Options();
 try {
+    $options->setConfig($config);
     $options->parse($_GET);
 } catch (\InvalidArgumentException $e) {
     header('HTTP/1.0 400 Bad Request');

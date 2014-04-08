@@ -54,6 +54,12 @@ class Options
             'default' => 'screen',
             'type'    => array('screen', 'page'),
         ),
+        'smaxage' => array(
+            'title'   => 'Maximum age for a screenshot',
+            'default' => null,
+            'type'    => 'age',
+            'min'     => null,
+        ),
         /**
          * Authentication
          */
@@ -75,6 +81,11 @@ class Options
     );
 
     public $values = array();
+
+    /**
+     * @var Config
+     */
+    protected $config;
 
 
     /**
@@ -105,6 +116,12 @@ class Options
             } else if (gettype($arOption['type']) == 'array') {
                 $this->values[$name] = $this->validateArray(
                     $arValues[$name], $arOption['type']
+                );
+            } else if ($arOption['type'] == 'age') {
+                $this->values[$name] = $this->clamp(
+                    static::validateAge($arValues[$name]),
+                    $arOption['min'], null,
+                    true
                 );
             } else if ($arOption['type'] != 'skip') {
                 throw new \InvalidArgumentException(
@@ -149,6 +166,63 @@ class Options
         }
     }
 
+    protected function clamp($value, $min, $max, $silent = false)
+    {
+        if ($min !== null && $value < $min) {
+            if ($silent) {
+                $value = $min;
+            } else {
+                throw new \InvalidArgumentException(
+                    'Value must be at least ' . $min
+                );
+            }
+        }
+        if ($max !== null && $value > $max) {
+            if ($silent) {
+                $value = $max;
+            } else {
+                throw new \InvalidArgumentException(
+                    'Value may be up to ' . $min
+                );
+            }
+        }
+        return $value;
+    }
+
+    /**
+     * Validates an age is numeric. If it is not numeric, it's interpreted as
+     * a ISO 8601 duration specification.
+     *
+     * @param string $value Age in seconds
+     *
+     * @return integer Age in seconds
+     *
+     * @throws \InvalidArgumentException
+     * @link   http://en.wikipedia.org/wiki/Iso8601#Durations
+     */
+    public static function validateAge($value)
+    {
+        if (!is_numeric($value)) {
+            //convert short notation to seconds
+            $value = 'P' . ltrim(strtoupper($value), 'P');
+            try {
+                $interval = new \DateInterval($value);
+            } catch (\Exception $e) {
+                throw new \InvalidArgumentException(
+                    'Invalid age: ' . $value
+                );
+            }
+            $value = 86400 * (
+                $interval->y * 365
+                + $interval->m * 30
+                + $interval->d
+            ) + $interval->h * 3600
+                + $interval->m * 60
+                + $interval->s;
+        }
+        return $value;
+    }
+
     protected function validateArray($value, $options)
     {
         if (array_search($value, $options) === false) {
@@ -168,17 +242,7 @@ class Options
             );
         }
         $value = (int) $value;
-        if ($value < $min) {
-            throw new \InvalidArgumentException(
-                'Value must be at least ' . $min
-            );
-        }
-        if ($value > $max) {
-            throw new \InvalidArgumentException(
-                'Value may be up to ' . $min
-            );
-        }
-        return $value;
+        return $this->clamp($value, $min, $max);
     }
 
     protected function validateUrl($url)
@@ -188,12 +252,19 @@ class Options
             throw new \InvalidArgumentException('Invalid URL');
         }
         if (!isset($parts['scheme'])) {
-            throw new \InvalidArgumentException('URL scheme missing');            
+            throw new \InvalidArgumentException('URL scheme missing');
         }
         if (!isset($parts['host'])) {
-            throw new \InvalidArgumentException('URL host missing');            
+            throw new \InvalidArgumentException('URL host missing');
         }
         return $url;
+    }
+
+    public function setConfig(Config $config)
+    {
+        $this->config = $config;
+        static::$options['smaxage']['default'] = $this->config->screenshotMaxAge;
+        static::$options['smaxage']['min']     = $this->config->screenshotMinAge;
     }
 }
 ?>

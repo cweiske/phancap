@@ -29,7 +29,7 @@ class Authenticator
         }
 
         $timestamp = (int) $_GET['atimestamp'];
-        if ($timestamp + $config->timestampLifetime < time()) {
+        if ($timestamp + $config->timestampMaxAge < time()) {
             throw new \Exception('atimestamp too old');
         }
 
