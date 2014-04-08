@@ -12,6 +12,19 @@ class Image
         $this->name = $name;
     }
 
+    public function getMimeType()
+    {
+        $ext = substr($this->name, -4);
+        if ($ext == '.jpg') {
+            return 'image/jpeg';
+        } else if ($ext == '.png') {
+            return 'image/png';
+        } else  if ($ext == '.png') {
+            return 'application/pdf';
+        }
+        return 'application/octet-stream';
+    }
+
     public function getPath()
     {
         return $this->config->cacheDir . $this->name;

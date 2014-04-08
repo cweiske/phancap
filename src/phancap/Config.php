@@ -30,6 +30,16 @@ class Config
     public $access = true;
 
     /**
+     * Redirect the browser to the cache URL.
+     * If disabled, the file is directly delivered.
+     *
+     * Helpful for debugging since it does not change the browser's URL.
+     *
+     * @var boolean
+     */
+    public $redirect = true;
+
+    /**
      * How long requests with an old timestamp may be used.
      * 2 days default.
      *

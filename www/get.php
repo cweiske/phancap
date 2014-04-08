@@ -40,8 +40,13 @@ $rep = new Repository();
 $rep->setConfig($config);
 try {
     $img = $rep->getImage($options);
-    header('HTTP/1.0 302 Found');
-    header('Location: ' . $img->getUrl());
+    if ($config->redirect) {
+        header('HTTP/1.0 302 Found');
+        header('Location: ' . $img->getUrl());
+    } else {
+        header('Content-type: ' . $img->getMimeType());
+        readfile($img->getPath());
+    }
 } catch (\Exception $e) {
     //FIXME: handle 404s and so properly
     header('HTTP/1.0 500 Internal Server error');
