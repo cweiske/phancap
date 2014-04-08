@@ -10,10 +10,14 @@ class Adapter_Cutycapt
 
     public function render(Image $img, Options $options)
     {
+        $format = $options->values['sformat'];
+        if ($format == 'jpg') {
+            $format = 'jpeg';
+        }
         $tmpPath = $img->getPath() . '-tmp';
         $cmd = 'cutycapt'
             . ' --url=' . escapeshellarg($options->values['url'])
-            . ' --out-format=' . escapeshellarg($options->values['sformat'])
+            . ' --out-format=' . escapeshellarg($format)
             . ' --out=' . escapeshellarg($tmpPath)
             . ' --max-wait=10000'
             . ' --min-width=' . $options->values['bwidth'];
