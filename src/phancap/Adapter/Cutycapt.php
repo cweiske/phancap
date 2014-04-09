@@ -3,6 +3,9 @@ namespace phancap;
 
 class Adapter_Cutycapt
 {
+    protected $lockHdl;
+    protected $lockFile = null;
+
     public function isAvailable()
     {
         //FIXME: setup check for xvfbrun, cutycapt, convert
@@ -14,6 +17,8 @@ class Adapter_Cutycapt
         if ($format == 'jpg') {
             $format = 'jpeg';
         }
+
+        $serverNumber = $this->getServerNumber($options);
         $tmpPath = $img->getPath() . '-tmp';
         $cmd = 'cutycapt'
             . ' --url=' . escapeshellarg($options->values['url'])
@@ -27,10 +32,59 @@ class Adapter_Cutycapt
 
         $xvfbcmd = 'xvfb-run'
             . ' -e /dev/stdout'
-            . ' --server-args="-screen 0, 1024x768x24"';
+            . ' --server-args="-screen 0, 1024x768x24"'
+            . ' --server-num=' . $serverNumber;
         Executor::run($xvfbcmd . ' ' . $cmd);
 
         $this->resize($tmpPath, $img, $options);
+    }
+
+    protected function getServerNumber()
+    {
+        //clean stale lock files
+        $this->cleanup();
+
+        $num = 100;
+        $bFound = false;
+        do {
+            ++$num;
+            $f = $this->config->cacheDir . 'tmp-curlycapt-server-' . $num . '.lock';
+            $this->lockHdl = fopen($f, 'w');
+            if (flock($this->lockHdl, LOCK_EX | LOCK_NB)) {
+                $this->lockFile = $f;
+                $bFound = true;
+                break;
+            } else {
+                fclose($this->lockHdl);
+            }
+        } while ($num < 200);
+
+        if (!$bFound) {
+            throw new \Exception('Too many requests running');
+        }
+
+        $this->lockFile = $f;
+        return $num;
+    }
+
+    public function cleanup()
+    {
+        if ($this->lockFile !== null && $this->lockHdl) {
+            flock($this->lockHdl, LOCK_UN);
+            unlink($this->lockFile);
+        }
+
+        $lockFiles = glob(
+            $this->config->cacheDir . 'tmp-curlycapt-server-*.lock'
+        );
+
+        $now = time();
+        foreach ($lockFiles as $file) {
+            if ($now - filemtime($file) > 120) {
+                //delete stale lock file; probably something crashed.
+                unlink($file);
+            }
+        }
     }
 
     protected function resize($tmpPath, $img, $options)
@@ -56,6 +110,11 @@ class Adapter_Cutycapt
         Executor::run($convertcmd);
         //var_dump($convertcmd);die();
         unlink($tmpPath);
+    }
+
+    public function setConfig(Config $config)
+    {
+        $this->config = $config;
     }
 }
 ?>

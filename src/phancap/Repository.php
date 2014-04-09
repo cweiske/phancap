@@ -56,7 +56,14 @@ class Repository
     protected function render(Image $img, Options $options)
     {
         $adapter = new Adapter_Cutycapt();
-        $adapter->render($img, $options);
+        $adapter->setConfig($this->config);
+        try {
+            $adapter->render($img, $options);
+            $adapter->cleanup();
+        } catch (\Exception $e) {
+            $adapter->cleanup();
+            throw $e;
+        }
     }
 }
 ?>
