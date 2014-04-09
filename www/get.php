@@ -42,6 +42,7 @@ try {
     $img = $rep->getImage($options);
     if ($config->redirect) {
         header('HTTP/1.0 302 Found');
+        header('Expires: ' . date('r', $img->getExpiryDate($options)));
         header('Location: ' . $img->getUrl());
     } else {
         header('Content-type: ' . $img->getMimeType());

@@ -12,6 +12,16 @@ class Image
         $this->name = $name;
     }
 
+    /**
+     * @return integer Unix timestamp
+     */
+    public function getExpiryDate(Options $options)
+    {
+        $mtime = filemtime($this->getPath());
+
+        return $mtime + $options->values['smaxage'];
+    }
+
     public function getMimeType()
     {
         $ext = substr($this->name, -4);
