@@ -6,9 +6,29 @@ class Adapter_Cutycapt
     protected $lockHdl;
     protected $lockFile = null;
 
+    /**
+     * @return mixed TRUE if all is fine, array with error messages otherwise
+     */
     public function isAvailable()
     {
-        //FIXME: setup check for xvfbrun, cutycapt, convert
+        $old = error_reporting(error_reporting() & ~E_STRICT);
+        $arErrors = array();
+        if (\System::which('xvfb-run') === false) {
+            $arErrors[] = '"xvfb-run" is not installed';
+        }
+        if (\System::which('cutycapt') === false) {
+            $arErrors[] = '"cutycapt" is not installed';
+        }
+        if (\System::which('convert') === false) {
+            $arErrors[] = '"convert" (imagemagick) is not installed';
+        }
+
+        error_reporting($old);
+        if (count($arErrors)) {
+            return $arErrors;
+        }
+
+        return true;
     }
 
     public function render(Image $img, Options $options)

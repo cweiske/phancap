@@ -3,7 +3,7 @@ namespace phancap;
 
 class Options
 {
-    public static $options = array(
+    public $options = array(
         /**
          * Browser settings
          */
@@ -96,7 +96,7 @@ class Options
      */
     public function parse($arValues)
     {
-        foreach (static::$options as $name => $arOption) {
+        foreach ($this->options as $name => $arOption) {
             $this->values[$name] = $arOption['default'];
             if (!isset($arValues[$name])) {
                 if (isset($arOption['required'])) {
@@ -263,8 +263,8 @@ class Options
     public function setConfig(Config $config)
     {
         $this->config = $config;
-        static::$options['smaxage']['default'] = $this->config->screenshotMaxAge;
-        static::$options['smaxage']['min']     = $this->config->screenshotMinAge;
+        $this->options['smaxage']['default'] = $this->config->screenshotMaxAge;
+        $this->options['smaxage']['min']     = $this->config->screenshotMinAge;
     }
 }
 ?>

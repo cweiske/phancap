@@ -157,7 +157,7 @@ Dependencies
 - `cutycapt <http://cutycapt.sourceforge.net/>`_
 - imagemagick's ``convert``
 - ``xvfb-run``
-
+- PEAR's ``System.php``
 
 
 =======================
