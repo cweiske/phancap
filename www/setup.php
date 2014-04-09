@@ -17,7 +17,18 @@ $messages = array();
 $config = new Config();
 try {
     $config->load();
-    $messages[][] = array('ok', 'Configuration check ok');
+    $messages[][] = array('ok', 'Base configuration is ok');
+
+    if ($config->access === true) {
+        $messages[][] = array('ok', 'Everyone may access the API');
+    } else if ($config->access === false) {
+        $messages[][] = array('err', 'API access is disabled');
+    } else {
+        $messages[][] = array(
+            'ok',
+            count($config->access) . ' users may access the API'
+        );
+    }
 } catch (\Exception $e) {
     $messages[][] = array('err', $e->getMessage());
 }
@@ -53,7 +64,7 @@ $out = <<<HTM
         content: '✔';
         color: green;
         padding: 0 0.5ex;
-        margin-right: 1ex;
+        margin-right: 0.5ex;
     }
     li.err:before {
         content: "✘";
