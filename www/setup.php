@@ -52,8 +52,6 @@ foreach ($adapter as $classpart) {
     }
 }
 
-header('HTTP/1.0 200 OK');
-
 $out = <<<HTM
 <?xml version="1.0" encoding="utf-8"?>
 <html>
@@ -102,5 +100,7 @@ $out .= <<<HTM
  </body>
 </html>
 HTM;
+
+header('HTTP/1.0 200 OK');
 echo $out;
 ?>
