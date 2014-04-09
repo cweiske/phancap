@@ -50,6 +50,7 @@ try {
     }
 } catch (\Exception $e) {
     //FIXME: handle 404s and so properly
+    //FIXME: send out error image if images are preferred
     header('HTTP/1.0 500 Internal Server error');
     header('Content-type: text/plain');
     echo $e->getMessage() . "\n";

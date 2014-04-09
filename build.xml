@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="phancap" default="phar" basedir=".">
+
+ <property name="version"  value="0.1.0" />
+ <property name="pharfile" value="${phing.dir}/dist/${phing.project.name}-${version}.phar" />
+ <property name="libdir" value="${phing.dir}/lib"/>
+
+ <fileset id="fs.phar" dir="${phing.dir}">
+<!---->
+  <include name="data/**"/>
+  <include name="lib/**"/>
+  <include name="src/**"/>
+  <include name="www/**"/>
+
+  <include name="README.rst"/>
+
+  <exclude name="data/phancap.config.php"/>
+<!--
+  <include name="www/index.php"/> -->
+ </fileset>
+
+ <typedef name="pearPackageFileSet" classname="phing.types.PearPackageFileSet" />
+
+ <target name="phar" depends="collectdeps"
+         description="Create zip file for release"
+ >
+  <mkdir dir="${phing.dir}/dist/"/>
+  <delete file="${pharfile}"/>
+  <pharpackage basedir="${phing.dir}"
+   destfile="${pharfile}"
+   stub="${phing.dir}/src/phar-stub.php"
+   alias="test.phar"
+  >
+   <fileset refid="fs.phar"/>
+  </pharpackage>
+  <!--
+  <exec executable="bzip2" dir="${phing.dir}/dist">
+   <arg value="-kf"/>
+   <arg file="${pharfile}"/>
+  </exec>
+  -->
+ </target>
+
+
+ <target name="collectdeps" description="Copy package dependencies to lib/">
+  <delete dir="${libdir}"/>
+  <mkdir dir="${libdir}"/>
+
+  <pearPackageFileset id="dep-PEAR" package="pear.php.net/PEAR">
+   <include name="PEAR/Exception.php"/>
+   <include name="PEAR.php"/>
+   <include name="PEAR5.php"/>
+  </pearPackageFileset>
+  <pearPackageFileset id="dep-Getopt" package="pear.php.net/Console_Getopt" />
+
+  <copy todir="${libdir}">
+   <fileset refid="dep-PEAR"/>
+   <fileset refid="dep-Getopt"/>
+  </copy>
+ </target>
+
+
+ <target name="docs" description="render documentation">
+  <rst file="README.rst"/>
+ </target>
+
+</project>
