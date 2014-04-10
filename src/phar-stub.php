@@ -28,25 +28,31 @@ $web = 'www/index.php';
  */
 function rewritePath($path)
 {
-    if ($path == '' || $path == '/') {
+    if ($path == '') {
+        //we need a / to get the relative links on index.php work
+        if (!isset($_SERVER['REQUEST_SCHEME'])) {
+            $_SERVER['REQUEST_SCHEME'] = 'http';
+        }
+        $url = $_SERVER['REQUEST_SCHEME'] . '://'
+            . $_SERVER['HTTP_HOST']
+            . preg_replace('/[?#].*$/', '', $_SERVER['REQUEST_URI'])
+            . '/';
+        header('Location: ' . $url);
+        exit(0);
+    } else if( $path == '/') {
         return 'www/index.php';
-    } else if ($path == '/get' || $path == '/get.php') {
-        return 'www/get.php';
-    } else if ($path == '/setup' || $path == '/setup.php') {
-        return 'www/setup.php';
     }
-    return $path;
+    return 'www' . $path;
 }
 
-//Phar::interceptFileFuncs();
 set_include_path(
     'phar://' . __FILE__
     . PATH_SEPARATOR . 'phar://' . __FILE__ . '/lib/'
 );
 Phar::webPhar(null, $web, null, array(), 'rewritePath');
 
-//work around https://bugs.php.net/bug.php?id=52322
-//require 'phar://' . __FILE__ . '/' . $web;
-echo "cli\n";
+//TODO: implement CLI setup check
+echo "phancap can only be used in the browser\n";
+exit(1);
 __HALT_COMPILER();
 ?>

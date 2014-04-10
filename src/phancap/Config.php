@@ -118,15 +118,23 @@ class Config
             . preg_replace('/#.*$/', '', $_SERVER['REQUEST_URI']);
     }
 
+    /**
+     * @return string Directory of URL without trailing slash,
+     *                and without .phar file
+     */
     protected function getCurrentUrlDir()
     {
         $url = $this->getCurrentUrl();
         $url = preg_replace('/\?.*$/', '', $url);
-        if (substr($url, -1) == '/') {
-            return $url;
+        if (substr($url, -1) != '/') {
+            $url = substr($url, 0, -strlen(basename($url)) - 1);
+        }
+        if (\Phar::running()) {
+            //remove .phar file name
+            $url = substr($url, 0, -strlen(basename($url)) - 1);
         }
 
-        return substr($url, 0, -strlen(basename($url)) - 1);
+        return $url;
     }
 }
 ?>

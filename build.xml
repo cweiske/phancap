@@ -50,6 +50,7 @@
    <include name="PEAR/Exception.php"/>
    <include name="PEAR.php"/>
    <include name="PEAR5.php"/>
+   <include name="System.php"/>
   </pearPackageFileset>
   <pearPackageFileset id="dep-Getopt" package="pear.php.net/Console_Getopt" />
 
