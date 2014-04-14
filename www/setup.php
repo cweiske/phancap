@@ -17,6 +17,12 @@ $messages = array();
 $config = new Config();
 try {
     $config->load();
+    if ($config->disableSetup) {
+        header('HTTP/1.0 403 Forbidden');
+        header('Content-type: text/plain');
+        echo "Setup check is disabled.\n";
+        exit(1);
+    }
     $messages[][] = array('ok', 'Base configuration is ok');
 
     if ($config->access === true) {

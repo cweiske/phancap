@@ -43,6 +43,12 @@ class Config
     public $access = true;
 
     /**
+     * Disable the setup check tool
+     * @var boolean
+     */
+    public $disableSetup = false;
+
+    /**
      * Redirect the browser to the cache URL.
      * If disabled, the file is directly delivered.
      *
