@@ -252,7 +252,10 @@ class Options
             throw new \InvalidArgumentException('Invalid URL');
         }
         if (!isset($parts['scheme'])) {
-            throw new \InvalidArgumentException('URL scheme missing');
+            $url = 'http://' . $url;
+            $parts = parse_url($url);
+        } else if ($parts['scheme'] != 'http' && $parts['scheme'] != 'https') {
+            throw new \InvalidArgumentException('Unsupported protocol');
         }
         if (!isset($parts['host'])) {
             throw new \InvalidArgumentException('URL host missing');
