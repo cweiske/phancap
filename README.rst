@@ -95,6 +95,11 @@ __ http://tools.ietf.org/html/rfc5849#section-3.4.2
 
 Example
 =======
+
+.. note::
+
+    The ``docs/`` directory contains an example PHP client implementation.
+
 We want to create a screenshot of ``http://example.org/`` in size 400x300,
 using the browser size of 1024x768::
 
