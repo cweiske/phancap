@@ -14,7 +14,8 @@ if (file_exists(__DIR__ . '/../src/phancap/Autoloader.php')) {
 header('HTTP/1.0 200 OK');
 ?>
 <?xml version="1.0" encoding="utf-8"?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
  <head>
   <title>phancap</title>
  </head>
@@ -23,6 +24,14 @@ header('HTTP/1.0 200 OK');
   <p>
    Web service to create website screenshots.
   </p>
+  <form method="get" action="./get.php">
+    <fieldset>
+      <legend>Create website screenshot</legend>
+      <label for="url">URL:</label>
+      <input type="text" name="url" id="url" size="30"/>
+      <button type="submit">Go</button>
+    </fieldset>
+  </form>
 
   <h2>API</h2>
   <p>
