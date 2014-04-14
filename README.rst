@@ -2,9 +2,34 @@
 phancap - website screenshot service
 ************************************
 
-Web service to create website screenshots.
+Web service (API) to create website screenshots.
 
 Self-hosted and written in PHP. Caching included.
+
+
+.. contents::
+
+===============
+Getting started
+===============
+
+Basic setup
+===========
+#. Download the ``.phar`` file and put it onto your web server
+#. Open the phar file in your browser
+#. Click the "setup check" link
+#. Fix all errors that are reported
+#. Run ``phancap.phar/get.php?url=cweiske.de`` and see the screenshot
+
+
+Advanced setup
+==============
+With the basic setup, everyone may use your server to create website
+screenshots.
+You may want to change that or simply change some default settings.
+
+#. Create a config file ``phancap.phar.config.php``
+#. Edit it; see the configuration_ options.
 
 
 ==============
@@ -50,7 +75,46 @@ Authentication parameters
 ``atoken``
   Access token (username)
 ``asignature``
-  Signature for the request. See the authentication section.
+  Signature for the request. See the authentication_ section.
+
+
+=============
+Configuration
+=============
+phancap looks at several places for its configuration file:
+
+#. ``phancap.phar.config.php`` in the same directory as your
+   ``phancap.phar`` file.
+
+#. ``/etc/phancap.php``
+
+
+Configuration variables
+=======================
+``$cacheDir``
+  Full file system path to image cache directory
+``$cacheDirUrl``
+  Full URL to cache directory
+``$access``
+  Credentials for access control
+
+  ``true`` to allow access to anyone, ``false`` to disable it completely.
+  ``array`` of username - secret key combinations otherwise.
+``$disableSetup``
+  Disable ``setup.php`` which will leak file system paths
+``$redirect``
+  Redirect to static image urls after generating them
+``$timestampmaxAge``
+  How long a signature timestamp is considered valid. 2 days default.
+``$screenshotMaxAge``
+  Cache time of downloaded screenshots.
+
+  When the file is as older than this, it gets re-created.
+``$screenshotMinAge``
+  Minimum age of a screeshot. 1 hour default.
+ 
+  A user cannot set the max age parameter below it.
+
 
 
 ==============
@@ -68,7 +132,12 @@ Phancap's configuration file may contain a ``$access`` variable:
   Nobody is allowed to access the service
 ``array``
   A list of usernames that are allowed to request screenshots, together
-  with their secret keys (password)
+  with their secret keys (password)::
+
+    $access = array(
+       'user1' => 'secret1',
+       'user2' => 'secret2',
+    )
 
 The signature algorithm is as follows:
 
@@ -153,7 +222,7 @@ Creating the HMAC digest with sha1, the calculated string and our key
 
     9a12eac5ff859f9306eaaf5a18b9a931fe10b89d
 
-This is the signature; it gets appended the URL as ``asignature`` parameter.
+This is the signature; it gets appended to the URL as ``asignature`` parameter.
 
 
 ============
@@ -165,78 +234,27 @@ Dependencies
 - PEAR's ``System.php``
 
 
-=======================
-Technical brainstorming
-=======================
+=======
+License
+=======
+``phancap`` is licensed under the `AGPL v3`__ or later.
 
-Tools to make website screenshots
-=================================
-- `cutycapt <http://cutycapt.sourceforge.net/>`_
-- `khtml2png <http://khtml2png.sourceforge.net/>`_ (outdated)
-- `phantomjs <http://phantomjs.org/>`_
-- `python-webkit2png <https://github.com/AdamN/python-webkit2png/>`_
-- `wkhtmltopdf <http://code.google.com/p/wkhtmltopdf/>`_
-- wkhtmltoimage
+__ http://www.gnu.org/licenses/agpl.html
 
 
-Possible parameters
-===================
+========
+Homepage
+========
+Web site
+   http://cweiske.de/phancap.htm
 
-Page request parameters
------------------------
-- url
-- bwidth (browser width / resolution)
-- bheight (browser height / resolution)
-- delay (capture X seconds after page loaded)
-- useragent (user agent header string)
-- accepted languages (Accept-Language header)
-- cookie (set cookie data)
-- referer (custom referer header)
-- post data (send POST data as if filled out a form)
+Source code
+   http://git.cweiske.de/phancap.git
 
-Screenshot configuration
-------------------------
-- width (of thumbnail)
-- height (of thumbnail)
-- output format (jpg, png, pdf)
-- mode: screen or page (full page height or screen size only)
-  - page aka fullpage
-- quality (jpeg image quality)
-
-Misc
-----
-- callback URL (to notify when screenshot is ready)
-- sync/async (wait for response or just get a 202 accepted)
-- cache (to force a fresh screenshot with cache=0,
-  otherwise seconds the cache may be old)
-- api key
-- token (md5 hash of query string)
-
-API parameter sources
----------------------
-- http://api1.thumbalizr.com/
-- http://url2png.com/docs/
-- http://webthumb.bluga.net/apidoc
-- http://www.page2images.com/Create-website-screenshot-online-API
-- http://browshot.com/api/documentation
+   Mirror: https://github.com/cweiske/phancap
 
 
-Other website screenshot services
-=================================
-- http://browsershots.org/
-- http://browshot.com/
-- http://ctrlq.org/screenshots/
-- http://grabz.it/
-- http://url2png.com/
-- http://usersnap.com/
-- http://websnapr.com/
-- http://webthumb.bluga.net/
-- http://www.page2images.com/
-- http://www.shrinktheweb.com/
-- http://www.thumbalizr.com/
-- http://www.url2picture.com/
-
-
-Other website screenshot software
-=================================
-- https://github.com/microweber/screen
+======
+Author
+======
+Written by Christian Weiske, cweiske@cweiske.de
