@@ -15,6 +15,19 @@ class Config
      */
     public $cacheDirUrl;
 
+
+    /**
+     * List of config file paths that were tried to load
+     * @var array
+     */
+    public $cfgFiles = array();
+
+    /**
+     * If a configuration file could be found
+     * @var boolean
+     */
+    public $cfgFileExists;
+
     /**
      * Credentials for access
      *
@@ -77,16 +90,42 @@ class Config
         $this->timestampMaxAge  = Options::validateAge($this->timestampMaxAge);
         $this->screenshotMaxAge = Options::validateAge($this->screenshotMaxAge);
         $this->screenshotMinAge = Options::validateAge($this->screenshotMinAge);
+
+        $this->loadConfigFilePaths();
     }
 
     public function load()
     {
-        $cfgFile = __DIR__ . '/../../data/phancap.config.php';
-        if (file_exists($cfgFile)) {
-            $this->loadFile($cfgFile);
+        $this->cfgFileExists = false;
+        foreach ($this->cfgFiles as $file) {
+            if (file_exists($file)) {
+                $this->cfgFileExists = true;
+                $this->loadFile($file);
+                break;
+            }
         }
 
         $this->setupCheck();
+    }
+
+    /**
+     * Load possible configuration file paths into $this->cfgFiles.
+     *
+     * @return void
+     */
+    protected function loadConfigFilePaths()
+    {
+        $pharFile = \Phar::running();
+        if ($pharFile == '') {
+            $this->cfgFiles[] = __DIR__ . '/../../data/phancap.config.php';
+        } else {
+            //remove phar:// from the path
+            $this->cfgFiles[] = substr($pharFile, 7) . '.config.php';
+        }
+
+        //TODO: add ~/.config/phancap.php
+
+        $this->cfgFiles[] = '/etc/phancap.php';
     }
 
     protected function loadFile($filename)

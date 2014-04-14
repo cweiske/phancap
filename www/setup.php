@@ -29,6 +29,21 @@ try {
             count($config->access) . ' users may access the API'
         );
     }
+
+    foreach ($config->cfgFiles as $cfgFile) {
+        $messages[][] = array(
+            'info', 'Possible config file: ' . $cfgFile
+        );
+    }
+    if ($config->cfgFileExists) {
+        $messages[][] = array(
+            'ok', 'Configuration file loaded'
+        );
+    } else {
+        $messages[][] = array(
+            'info', 'No configuration file found'
+        );
+    }
 } catch (\Exception $e) {
     $messages[][] = array('err', $e->getMessage());
 }
@@ -58,18 +73,26 @@ $out = <<<HTM
  <head>
   <title>phancap setup check</title>
   <style type="text/css">
+    li:before {
+        text-align: center;
+        display: inline-block;
+        width: 1em;
+        padding: 0 0.5ex;
+        margin-right: 0.5ex;
+    }
     li.ok:before {
         content: '✔';
         color: green;
-        padding: 0 0.5ex;
-        margin-right: 0.5ex;
     }
     li.err:before {
         content: "✘";
         color: white;
         background-color: red;
-        padding: 0 0.5ex;
-        margin-right: 0.5ex;
+    }
+    li.info:before {
+        content: "i";
+        font-weight: bold;
+        color: blue;
     }
   </style>
  </head>
