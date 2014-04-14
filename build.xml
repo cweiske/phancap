@@ -15,6 +15,7 @@
   <include name="README.rst"/>
 
   <exclude name="data/phancap.config.php"/>
+  <exclude name="www/imgcache/"/>
 <!--
   <include name="www/index.php"/> -->
  </fileset>
