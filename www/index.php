@@ -95,7 +95,15 @@ foreach ($options->options as $name => $option) {
        </tbody>
       </table>
      </div>
-
+     <p>
+      Ages can be given as ISO 8601 duration specification, for example:
+     </p>
+     <dl class="dl-horizontal">
+      <dt><tt>P1Y</tt></dt><dd>1 year</dd>
+      <dt><tt>P2W</tt></dt><dd>2 weeks</dd>
+      <dt><tt>P1D</tt></dt><dd>1 day</dd>
+      <dt><tt>PT4H</tt></dt><dd>4 hours</dd>
+     </dl>
 
      <h2 id="tools">Tools</h2>
      <ul class="list-group">
