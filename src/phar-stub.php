@@ -42,6 +42,10 @@ function rewritePath($path)
     } else if( $path == '/') {
         return 'www/index.php';
     }
+
+    if (substr($path, -4) == '.css') {
+        header('Expires: ' . date('r', time() + 86400 * 7));
+    }
     return 'www' . $path;
 }
 
