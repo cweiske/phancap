@@ -43,7 +43,8 @@ header('HTTP/1.0 200 OK');
        <form method="get" action="./get.php" class="form-inline" role="form">
         <div class="form-group">
          <label for="url">URL:</label>
-         <input type="text" name="url" id="url" size="30" class="form-control"/>
+         <input type="text" name="url" id="url" size="30" class="form-control"
+                placeholder="http://example.org/" />
         </div>
         <button type="submit" class="btn btn-default">Go</button>
        </form>
@@ -57,7 +58,7 @@ header('HTTP/1.0 200 OK');
      </p>
 
      <div class="panel panel-default">
-      <div class="panel-heading">Available URL parameters</div>
+      <div class="panel-heading" style="text-align: center">Available URL parameters</div>
       <table class="table table-striped table-bordered table-condensed">
        <thead>
         <tr>
