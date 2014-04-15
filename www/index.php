@@ -12,6 +12,13 @@ if (file_exists(__DIR__ . '/../src/phancap/Autoloader.php')) {
     include_once 'phancap/Autoloader.php';
 }
 header('HTTP/1.0 200 OK');
+
+$options = new Options();
+$config = new Config();
+try {
+    $config->load();
+    $options->setConfig($config);
+} catch (\Exception $e) {}
 ?>
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -46,6 +53,11 @@ header('HTTP/1.0 200 OK');
        <div class="panel panel-default">
         <div class="panel-heading">Create screenshot</div>
         <div class="panel-body">
+         <?php if ($config->access === false) { ?>
+          <div class="alert alert-danger">API is disabled</div>
+         <?php } else if ($config->access !== true) { ?>
+          <div class="alert alert-warning">API requires authentication</div>
+         <?php } ?>
          <form method="get" action="./get.php" class="form-inline" role="form">
           <div class="form-group">
            <label for="url">URL:</label>
@@ -90,13 +102,6 @@ header('HTTP/1.0 200 OK');
        </thead>
        <tbody>
 <?php
-$options = new Options();
-$config = new Config();
-try {
-    $config->load();
-    $options->setConfig($config);
-} catch (\Exception $e) {}
-
 foreach ($options->options as $name => $option) {
     echo '<tr>'
         . '<td><tt>' . $name . '</tt></td>'
