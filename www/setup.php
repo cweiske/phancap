@@ -75,10 +75,16 @@ foreach ($adapter as $classpart) {
 
 $out = <<<HTM
 <?xml version="1.0" encoding="utf-8"?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
  <head>
   <title>phancap setup check</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+  <link rel="stylesheet" href="css/phancap.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <style type="text/css">
+    /*
     li:before {
         text-align: center;
         display: inline-block;
@@ -100,20 +106,34 @@ $out = <<<HTM
         font-weight: bold;
         color: blue;
     }
+    */
   </style>
  </head>
  <body>
-  <h1>phancap setup check</h1>
-<ul>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+
+     <div class="page-header">
+      <h1>phancap setup check</h1>
+     </div>
+
+     <ul class="list-group">
 HTM;
+$stateMap = array(
+    'ok' => 'success',
+    'info' => 'info',
+    'err' => 'danger'
+);
 foreach ($messages as $key => $messages) {
     if (!is_numeric($key)) {
-        $out .= '<li>' . htmlspecialchars($key)
-            . '<ul>';
+        $out .= '<li class="list-group-item">' . htmlspecialchars($key)
+            . '<ul class="list-group">';
     }
     foreach ($messages as $data) {
         list($state, $message) = $data;
-        $out .= '<li class="' . $state . '">';
+        $out .= '<li class="list-group-item list-group-item-' . $stateMap[$state] . '">';
         $out .= htmlspecialchars($message);
         $out .= '</li>' . "\n";
     }
@@ -122,10 +142,13 @@ foreach ($messages as $key => $messages) {
     }
 }
 $out .= <<<HTM
-  </ul>
-  <p>
-   <a href="./">back</a> to the index
-  </p>
+     </ul>
+     <p>
+      <a href="./">back</a> to the index
+     </p>
+    </div>
+   </div>
+  </div>
  </body>
 </html>
 HTM;

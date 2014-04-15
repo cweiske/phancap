@@ -18,36 +18,56 @@ header('HTTP/1.0 200 OK');
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
  <head>
   <title>phancap</title>
+
+  <link rel="stylesheet" href="css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+  <link rel="stylesheet" href="css/phancap.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
  </head>
  <body>
-  <h1>phancap</h1>
-  <p>
-   Web service to create website screenshots.
-  </p>
-  <form method="get" action="./get.php">
-    <fieldset>
-      <legend>Create website screenshot</legend>
-      <label for="url">URL:</label>
-      <input type="text" name="url" id="url" size="30"/>
-      <button type="submit">Go</button>
-    </fieldset>
-  </form>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
 
-  <h2>API</h2>
-  <p>
-   The API is accessible at <a href="get.php">get.php</a>.
-  </p>
-  <table border="1">
-   <caption>Available URL parameters</caption>
-   <thead>
-    <tr>
-     <th>Name</th>
-     <th>Description</th>
-     <th>Type</th>
-     <th>Default</th>
-    </tr>
-   </thead>
-   <tbody>
+     <div class="page-header">
+      <h1>phancap</h1>
+     </div>
+     <p>
+      Web service to create website screenshots.
+     </p>
+
+     <div class="panel panel-default">
+      <div class="panel-heading">Create website screenshot</div>
+      <div class="panel-body">
+       <form method="get" action="./get.php" class="form-inline" role="form">
+        <div class="form-group">
+         <label for="url">URL:</label>
+         <input type="text" name="url" id="url" size="30" class="form-control"/>
+        </div>
+        <button type="submit" class="btn btn-default">Go</button>
+       </form>
+      </div>
+     </div>
+
+
+     <h2 id="api">API</h2>
+     <p>
+      The API is accessible at <a href="get.php">get.php</a>.
+     </p>
+
+     <div class="panel panel-default">
+      <div class="panel-heading">Available URL parameters</div>
+      <table class="table table-striped table-bordered table-condensed">
+       <thead>
+        <tr>
+         <th>Name</th>
+         <th>Description</th>
+         <th>Type</th>
+         <th>Default</th>
+        </tr>
+       </thead>
+       <tbody>
 <?php
 $options = new Options();
 $config = new Config();
@@ -71,15 +91,20 @@ foreach ($options->options as $name => $option) {
         . '</tr>';
 }
 ?>
-   </tbody>
-  </table>
+       </tbody>
+      </table>
+     </div>
 
 
-  <h2>Tools</h2>
-  <ul>
-   <li>
-    <a href="setup.php">Setup check</a> to test if everything is ok
-   </li>
-  </ul>
+     <h2 id="tools">Tools</h2>
+     <ul class="list-group">
+      <li class="list-group-item">
+       <a href="setup.php">Setup check</a> to test if everything is ok
+      </li>
+     </ul>
+
+    </div>
+   </div>
+  </div>
  </body>
 </html>
