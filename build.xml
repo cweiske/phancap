@@ -13,6 +13,7 @@
   <include name="www/**"/>
 
   <include name="README.rst"/>
+  <include name="www/README.html"/>
 
   <exclude name="data/phancap.config.php"/>
   <exclude name="www/imgcache/"/>
@@ -22,7 +23,7 @@
 
  <typedef name="pearPackageFileSet" classname="phing.types.PearPackageFileSet" />
 
- <target name="phar" depends="collectdeps"
+ <target name="phar" depends="collectdeps,docs"
          description="Create zip file for release"
  >
   <mkdir dir="${phing.dir}/dist/"/>
@@ -63,7 +64,7 @@
 
 
  <target name="docs" description="render documentation">
-  <rst file="README.rst"/>
+  <rst file="README.rst" destination="www/README.html"/>
  </target>
 
 </project>

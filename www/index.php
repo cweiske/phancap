@@ -33,23 +33,43 @@ header('HTTP/1.0 200 OK');
      <div class="page-header">
       <h1>phancap</h1>
      </div>
-     <p>
-      Web service to create website screenshots.
-     </p>
 
-     <div class="panel panel-default">
-      <div class="panel-heading">Create website screenshot</div>
-      <div class="panel-body">
-       <form method="get" action="./get.php" class="form-inline" role="form">
-        <div class="form-group">
-         <label for="url">URL:</label>
-         <input type="text" name="url" id="url" size="30" class="form-control"
-                placeholder="http://example.org/" />
+     <div class="row">
+      <div class="col-md-6">
+       <p>
+        Web service to create website screenshots.
+       </p>
+
+      </div>
+      <div class="col-md-6">
+
+       <div class="panel panel-default">
+        <div class="panel-heading">Create screenshot</div>
+        <div class="panel-body">
+         <form method="get" action="./get.php" class="form-inline" role="form">
+          <div class="form-group">
+           <label for="url">URL:</label>
+           <input type="text" name="url" id="url" size="30" class="form-control"
+                  placeholder="http://example.org/" />
+          </div>
+          <button type="submit" class="btn btn-default">Go</button>
+         </form>
         </div>
-        <button type="submit" class="btn btn-default">Go</button>
-       </form>
+       </div>
+
       </div>
      </div>
+
+
+     <h2 id="tools">Tools</h2>
+     <ul class="list-group">
+      <li class="list-group-item">
+       <a href="setup.php">Setup check</a> to test if everything is ok
+      </li>
+      <li class="list-group-item">
+       <a href="README.html">README</a>
+      </li>
+     </ul>
 
 
      <h2 id="api">API</h2>
@@ -104,13 +124,6 @@ foreach ($options->options as $name => $option) {
       <dt><tt>P1D</tt></dt><dd>1 day</dd>
       <dt><tt>PT4H</tt></dt><dd>4 hours</dd>
      </dl>
-
-     <h2 id="tools">Tools</h2>
-     <ul class="list-group">
-      <li class="list-group-item">
-       <a href="setup.php">Setup check</a> to test if everything is ok
-      </li>
-     </ul>
 
     </div>
    </div>
