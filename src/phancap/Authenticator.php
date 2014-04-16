@@ -1,8 +1,39 @@
 <?php
+/**
+ * Part of phancap
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Authenticator
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/phancap.htm
+ */
 namespace phancap;
 
+/**
+ * Authentication helper methods
+ *
+ * @category  Tools
+ * @package   Authenticator
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @version   Release: @package_version@
+ * @link      http://cweiske.de/phancap.htm
+ */
 class Authenticator
 {
+    /**
+     * Validate the authentication signature.
+     *
+     * @param object $config Phancap configuration
+     *
+     * @return void
+     * @throws \Exception When a parameter is missing, or authentication fails
+     */
     public function authenticate(Config $config)
     {
         if ($config->access === false) {
@@ -45,7 +76,13 @@ class Authenticator
         }
     }
 
-
+    /**
+     * Convert a list of parameters into a string that can be hashed.
+     *
+     * @param array $params Parameters, key-value pairs
+     *
+     * @return string Line of encoded parameters
+     */
     protected function getSignatureData($params)
     {
         ksort($params);

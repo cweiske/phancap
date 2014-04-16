@@ -1,12 +1,46 @@
 <?php
+/**
+ * Part of phancap
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Adapter_Cutycapt
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/phancap.htm
+ */
 namespace phancap;
 
+/**
+ * Screenshot rendering using the "cutycapt" command line tool.
+ *
+ * @category  Tools
+ * @package   Adapter_Cutycapt
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @version   Release: @package_version@
+ * @link      http://cweiske.de/phancap.htm
+ */
 class Adapter_Cutycapt
 {
+    /**
+     * Lock file handle
+     * @var resourece
+     */
     protected $lockHdl;
+
+    /**
+     * Lock file path
+     * @var string
+     */
     protected $lockFile = null;
 
     /**
+     * Check if all dependencies are available.
+     *
      * @return mixed TRUE if all is fine, array with error messages otherwise
      */
     public function isAvailable()
@@ -31,6 +65,15 @@ class Adapter_Cutycapt
         return true;
     }
 
+    /**
+     * Render a website screenshot
+     *
+     * @param Image   $img     Image configuration
+     * @param Options $options Screenshot configuration
+     *
+     * @return void
+     * @throws \Exception When something fails
+     */
     public function render(Image $img, Options $options)
     {
         $format = $options->values['sformat'];
@@ -59,6 +102,14 @@ class Adapter_Cutycapt
         $this->resize($tmpPath, $img, $options);
     }
 
+    /**
+     * Get a free X server number.
+     *
+     * Each xvfb-run process needs its own free server number.
+     * Needed for multiple parallel requests.
+     *
+     * @return integer Server number
+     */
     protected function getServerNumber()
     {
         //clean stale lock files
@@ -87,6 +138,11 @@ class Adapter_Cutycapt
         return $num;
     }
 
+    /**
+     * Unlock lock file and clean up old lock files
+     *
+     * @return void
+     */
     public function cleanup()
     {
         if ($this->lockFile !== null && $this->lockHdl) {
@@ -107,7 +163,18 @@ class Adapter_Cutycapt
         }
     }
 
-    protected function resize($tmpPath, $img, $options)
+    /**
+     * Convert an image to the given size.
+     *
+     * Target file is the path of $img.
+     *
+     * @param string  $tmpPath Path of image to be scaled.
+     * @param Image   $img     Image configuration
+     * @param Options $options Screenshot configuration
+     *
+     * @return void
+     */
+    protected function resize($tmpPath, Image $img, Options $options)
     {
         if ($options->values['sformat'] == 'pdf') {
             //nothing to resize.
@@ -132,6 +199,13 @@ class Adapter_Cutycapt
         unlink($tmpPath);
     }
 
+    /**
+     * Set phancap configuration
+     *
+     * @param Config $config Phancap configuration
+     *
+     * @return void
+     */
     public function setConfig(Config $config)
     {
         $this->config = $config;

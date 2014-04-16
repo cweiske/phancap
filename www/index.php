@@ -1,8 +1,17 @@
 <?php
-namespace phancap;
 /**
- * Check if everything is setup
+ * Give information about phancap 
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Phancap
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/phancap.htm
  */
+namespace phancap;
 header('HTTP/1.0 500 Internal Server Error');
 
 if (file_exists(__DIR__ . '/../src/phancap/Autoloader.php')) {
@@ -18,7 +27,8 @@ $config = new Config();
 try {
     $config->load();
     $options->setConfig($config);
-} catch (\Exception $e) {}
+} catch (\Exception $e) {
+}
 ?>
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -90,7 +100,9 @@ try {
      </p>
 
      <div class="panel panel-default">
-      <div class="panel-heading" style="text-align: center">Available URL parameters</div>
+      <div class="panel-heading" style="text-align: center">
+       Available URL parameters
+      </div>
       <table class="table table-striped table-bordered table-condensed">
        <thead>
         <tr>

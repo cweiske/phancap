@@ -1,8 +1,36 @@
 <?php
+/**
+ * Part of phancap
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Options
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/phancap.htm
+ */
 namespace phancap;
 
+/**
+ * Options a user can give to the API
+ *
+ * @category  Tools
+ * @package   Options
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @version   Release: @package_version@
+ * @link      http://cweiske.de/phancap.htm
+ */
 class Options
 {
+    /**
+     * Available options and their configuration
+     *
+     * @var array
+     */
     public $options = array(
         /**
          * Browser settings
@@ -80,6 +108,11 @@ class Options
         ),
     );
 
+    /**
+     * Actual values we use after parsing the GET parameters
+     *
+     * @var array
+     */
     public $values = array();
 
     /**
@@ -93,6 +126,10 @@ class Options
      * $this->values.
      *
      * @param array $arValues Array of options, e.g. $_GET
+     *
+     * @return void
+     * @throws \InvalidArgumentException When required parameters are missing
+     *         or parameter values are invalid.
      */
     public function parse($arValues)
     {
@@ -140,6 +177,11 @@ class Options
         $this->calcPageSize();
     }
 
+    /**
+     * Calculate the browser size and screenshot size from the given options
+     *
+     * @return void
+     */
     protected function calcPageSize()
     {
         if ($this->values['swidth'] === null) {
@@ -166,6 +208,18 @@ class Options
         }
     }
 
+    /**
+     * Makes sure a value is between $min and $max (inclusive)
+     *
+     * @param integer $value  Value to check
+     * @param integer $min    Minimum allowed value
+     * @param integer $max    Maximum allowed value
+     * @param boolean $silent When silent, invalid values are corrected.
+     *                        An exception is thrown otherwise.
+     *
+     * @return integer Corrected value
+     * @throws \InvalidArgumentException When not silent and value outside range
+     */
     protected function clamp($value, $min, $max, $silent = false)
     {
         if ($min !== null && $value < $min) {
@@ -196,7 +250,6 @@ class Options
      * @param string $value Age in seconds
      *
      * @return integer Age in seconds
-     *
      * @throws \InvalidArgumentException
      * @link   http://en.wikipedia.org/wiki/Iso8601#Durations
      */
@@ -223,6 +276,15 @@ class Options
         return $value;
     }
 
+    /**
+     * Check that a given value exists in an array
+     *
+     * @param string $value   Value to check
+     * @param array  $options Array of allowed values
+     *
+     * @return string Value
+     * @throws \InvalidArgumentException If the value does not exist in $options
+     */
     protected function validateArray($value, $options)
     {
         if (array_search($value, $options) === false) {
@@ -234,6 +296,16 @@ class Options
         return $value;
     }
 
+    /**
+     * Validate that a value is numeric and between $min and $max (inclusive)
+     *
+     * @param string  $value Value to check
+     * @param integer $min   Minimum allowed value
+     * @param integer $max   Maximum allowed value
+     *
+     * @return integer Value as integer
+     * @throws \InvalidArgumentException When outside range or not numeric
+     */
     protected function validateInt($value, $min, $max)
     {
         if (!is_numeric($value)) {
@@ -245,6 +317,14 @@ class Options
         return $this->clamp($value, $min, $max);
     }
 
+    /**
+     * Validate (and fix) an URL
+     *
+     * @param string $url URL
+     *
+     * @return string Fixed URL
+     * @throws \InvalidArgumentException
+     */
     protected function validateUrl($url)
     {
         $parts = parse_url($url);
@@ -263,6 +343,13 @@ class Options
         return $url;
     }
 
+    /**
+     * Set phancap configuration
+     *
+     * @param Config $config Phancap configuration
+     *
+     * @return void
+     */
     public function setConfig(Config $config)
     {
         $this->config = $config;

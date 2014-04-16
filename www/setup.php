@@ -1,8 +1,17 @@
 <?php
-namespace phancap;
 /**
- * Check if everything is setup
+ * Check if everything is setup correctly
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Phancap
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/phancap.htm
  */
+namespace phancap;
 header('HTTP/1.0 500 Internal Server Error');
 
 if (file_exists(__DIR__ . '/../src/phancap/Autoloader.php')) {
@@ -133,7 +142,8 @@ foreach ($messages as $key => $messages) {
     }
     foreach ($messages as $data) {
         list($state, $message) = $data;
-        $out .= '<li class="list-group-item list-group-item-' . $stateMap[$state] . '">';
+        $out .= '<li class="list-group-item list-group-item-'
+            . $stateMap[$state] . '">';
         $out .= htmlspecialchars($message);
         $out .= '</li>' . "\n";
     }

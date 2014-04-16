@@ -1,6 +1,29 @@
 <?php
+/**
+ * Part of phancap
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Config
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/phancap.htm
+ */
 namespace phancap;
 
+/**
+ * Phancap configuration
+ *
+ * @category  Tools
+ * @package   Config
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @version   Release: @package_version@
+ * @link      http://cweiske.de/phancap.htm
+ */
 class Config
 {
     /**
@@ -88,6 +111,9 @@ class Config
     public $screenshotMinAge = 'PT1H';
 
 
+    /**
+     * Initialize default values and loads configuration file paths
+     */
     public function __construct()
     {
         $this->cacheDir    = getcwd() . '/imgcache/';
@@ -100,6 +126,12 @@ class Config
         $this->loadConfigFilePaths();
     }
 
+    /**
+     * Load the first configuration file that exists
+     *
+     * @return void
+     * @uses   $cfgFileExists
+     */
     public function load()
     {
         $this->cfgFileExists = false;
@@ -134,6 +166,13 @@ class Config
         $this->cfgFiles[] = '/etc/phancap.php';
     }
 
+    /**
+     * Load values of a configuration file into this class
+     *
+     * @param string $filename Configuration file (.php)
+     *
+     * @return void
+     */
     protected function loadFile($filename)
     {
         include $filename;
@@ -143,16 +182,31 @@ class Config
         }
     }
 
+    /**
+     * Check if the cache directory exists and is writable
+     *
+     * @return void
+     * @throws \Exception When something is not ok
+     */
     public function setupCheck()
     {
         if (!is_dir($this->cacheDir)) {
-            throw new \Exception('Cache directory does not exist: ' . $this->cacheDir);
+            throw new \Exception(
+                'Cache directory does not exist: ' . $this->cacheDir
+            );
         }
         if (!is_writable($this->cacheDir)) {
-            throw new \Exception('Cache directory is not writable: ' . $this->cacheDir);
+            throw new \Exception(
+                'Cache directory is not writable: ' . $this->cacheDir
+            );
         }
     }
 
+    /**
+     * Returns the current URL, without fragmet.
+     *
+     * @return string Full URL
+     */
     protected function getCurrentUrl()
     {
         if (!isset($_SERVER['REQUEST_SCHEME'])) {
@@ -164,6 +218,8 @@ class Config
     }
 
     /**
+     * Returns the current URL without the file name in the path
+     *
      * @return string Directory of URL without trailing slash,
      *                and without .phar file
      */

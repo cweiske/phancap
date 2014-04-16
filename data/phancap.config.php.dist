@@ -1,4 +1,10 @@
 <?php
+/**
+ * phancap configuration
+ *
+ * See README for a list of configuration options
+ */
+
 //username => secret key
 $access = array(
     'bar' => 'bar',

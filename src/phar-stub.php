@@ -39,7 +39,7 @@ function rewritePath($path)
             . '/';
         header('Location: ' . $url);
         exit(0);
-    } else if( $path == '/') {
+    } else if ($path == '/') {
         return 'www/index.php';
     }
 
