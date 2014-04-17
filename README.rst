@@ -7,7 +7,33 @@ Web service (API) to create website screenshots.
 Self-hosted and written in PHP. Caching included.
 
 
+*phancap* is useful for:
+
+- Show screenshots for websites in your bookmarking application
+- Archive a HTML page as PDF for later viewing
+
+
 .. contents::
+
+
+========
+Features
+========
+
+* Configurable browser size
+* Configurable screenshot size
+* Clip and full page rendering (full height)
+* JPG, PNG and PDF output (PDFs are searchable)
+* Authentication
+* Can run on a normal web server without GUI. See dependencies_.
+
+
+.. note::
+    *phancap* does not rely on a "real" browser.
+    Currently ``cutycapt`` is utilized, which uses a pretty bare webkit to render
+    the pages.
+    Do not expect pixel-for-pixel identical rendering as your desktop browser.
+
 
 ===============
 Getting started
@@ -228,10 +254,15 @@ This is the signature; it gets appended to the URL as ``asignature`` parameter.
 ============
 Dependencies
 ============
-- `cutycapt <http://cutycapt.sourceforge.net/>`_
-- imagemagick's ``convert``
-- ``xvfb-run``
-- PEAR's ``System.php``
+- External tools:
+
+  - `cutycapt <http://cutycapt.sourceforge.net/>`_
+  - `imagemagick's <http://www.imagemagick.org/>`_ ``convert``
+  - ``xvfb-run``
+
+- Libraries (already included in the ``.phar``):
+
+  - PEAR's ``System.php``
 
 
 =======
