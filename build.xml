@@ -6,7 +6,6 @@
  <property name="libdir" value="${phing.dir}/lib"/>
 
  <fileset id="fs.phar" dir="${phing.dir}">
-<!---->
   <include name="data/**"/>
   <include name="lib/**"/>
   <include name="src/**"/>
@@ -17,8 +16,7 @@
 
   <exclude name="data/phancap.config.php"/>
   <exclude name="www/imgcache/"/>
-<!--
-  <include name="www/index.php"/> -->
+  <exclude name="www/*.phar"/>
  </fileset>
 
  <typedef name="pearPackageFileSet" classname="phing.types.PearPackageFileSet" />
@@ -31,16 +29,15 @@
   <pharpackage basedir="${phing.dir}"
    destfile="${pharfile}"
    stub="${phing.dir}/src/phar-stub.php"
-   alias="test.phar"
+   alias="phancap.phar"
   >
    <fileset refid="fs.phar"/>
   </pharpackage>
-  <!--
+
   <exec executable="bzip2" dir="${phing.dir}/dist">
    <arg value="-kf"/>
    <arg file="${pharfile}"/>
   </exec>
-  -->
  </target>
 
 
