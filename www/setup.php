@@ -159,6 +159,14 @@ $out .= <<<HTM
     </div>
    </div>
   </div>
+
+  <div class="container footer">
+   <a href="http://cweiske.de/phancap.htm">phancap</a>,
+   the self-hosted website screenshot service is available under the
+   <a href="http://www.gnu.org/licenses/agpl-3.0.html">
+    <abbr title="GNU Affero General Public License">AGPL</abbr></a>.
+  </div>
+
  </body>
 </html>
 HTM;

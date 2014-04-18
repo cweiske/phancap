@@ -1,3 +1,11 @@
 h2 {
     margin-top: 3ex;
 }
+.footer {
+    margin-top: 3ex;
+    margin-bottom: 0px;
+    border-top: 1px solid #DDD;
+    color: #999;
+    text-align: center;
+    clear: both;
+}
