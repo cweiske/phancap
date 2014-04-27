@@ -289,3 +289,12 @@ Source code
 Author
 ======
 Written by Christian Weiske, cweiske@cweiske.de
+
+
+============
+Alternatives
+============
+All of those are open source:
+
+* http://code.google.com/p/browsershots/ (python)
+* https://github.com/gre/screenshot-webservice (scala)
