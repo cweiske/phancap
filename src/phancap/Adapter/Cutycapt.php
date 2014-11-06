@@ -56,6 +56,9 @@ class Adapter_Cutycapt
         if (\System::which('convert') === false) {
             $arErrors[] = '"convert" (imagemagick) is not installed';
         }
+        if (\System::which('timeout') === false) {
+            $arErrors[] = '"timeout" (GNU coreutils) is not installed';
+        }
 
         error_reporting($old);
         if (count($arErrors)) {
@@ -80,6 +83,7 @@ class Adapter_Cutycapt
         if ($format == 'jpg') {
             $format = 'jpeg';
         }
+        $maxWaitTime = 30;//seconds
 
         $serverNumber = $this->getServerNumber($options);
         $tmpPath = $img->getPath() . '-tmp';
@@ -87,7 +91,7 @@ class Adapter_Cutycapt
             . ' --url=' . escapeshellarg($options->values['url'])
             . ' --out-format=' . escapeshellarg($format)
             . ' --out=' . escapeshellarg($tmpPath)
-            . ' --max-wait=10000'
+            . ' --max-wait=' . (($maxWaitTime - 1) * 1000)
             . ' --min-width=' . $options->values['bwidth'];
         if ($options->values['bheight'] !== null) {
             $cmd .= ' --min-height=' . $options->values['bheight'];
@@ -97,7 +101,9 @@ class Adapter_Cutycapt
             . ' -e /dev/stdout'
             . ' --server-args="-screen 0, 1024x768x24"'
             . ' --server-num=' . $serverNumber;
-        Executor::run($xvfbcmd . ' ' . $cmd);
+        //cutycapt hangs sometimes - https://sourceforge.net/p/cutycapt/bugs/8/
+        // we kill it if it does not exit itself
+        Executor::runForSomeTime($xvfbcmd . ' ' . $cmd, $maxWaitTime);
 
         $this->resize($tmpPath, $img, $options);
     }

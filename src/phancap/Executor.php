@@ -43,5 +43,23 @@ class Executor
             throw new \Exception('Error running cutycapt', $exitcode);
         }
     }
+
+    /**
+     * Let the command run for some time. Kill it if it did not exit itself.
+     *
+     * We use the GNU coreutils "timeout" utility instead of the pcntl
+     * extension since pcntl is disabled on mod_php.
+     *
+     * @param string $cmd Full command including parameters and options
+     *
+     * @return void
+     * @throws \Exception When the exit code is not 0
+     */
+    public static function runForSomeTime($cmd, $seconds)
+    {
+        return static::run(
+            'timeout --signal=9 ' . $seconds . 's ' . $cmd
+        );
+    }
 }
 ?>
