@@ -1,0 +1,9 @@
+2014-11-06  Christian Weiske  <cweiske@cweiske.de>
+
+	* Kill cutycapt after some time
+	* Make cutycapt options configurable
+	* Release version 0.2.0
+
+2014-04-18  Christian Weiske  <cweiske@cweiske.de>
+
+	* Release version 0.1.0
