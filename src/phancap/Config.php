@@ -110,6 +110,11 @@ class Config
      */
     public $screenshotMinAge = 'PT1H';
 
+    /**
+     * Cutycapt adapter options
+     */
+    public $cutycapt = array();
+
 
     /**
      * Initialize default values and loads configuration file paths

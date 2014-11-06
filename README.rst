@@ -126,6 +126,14 @@ Configuration variables
 
   ``true`` to allow access to anyone, ``false`` to disable it completely.
   ``array`` of username - secret key combinations otherwise.
+``$cutycapt['parameters']``
+  Additional command line parameters for cutycapt.
+  Can be used to e.g. enable browser plugins:
+
+  ``$cutycapt['parameters'] = '--plugins=on';``
+``$cutycapt['maxWaitTime']``
+  Maximal time in seconds to wait for cutycapt to finish rendering.
+  Defaults to 30 seconds.
 ``$disableSetup``
   Disable ``setup.php`` which will leak file system paths
 ``$redirect``

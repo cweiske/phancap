@@ -83,7 +83,16 @@ class Adapter_Cutycapt
         if ($format == 'jpg') {
             $format = 'jpeg';
         }
+
         $maxWaitTime = 30;//seconds
+        if (isset($this->config->cutycapt['maxWaitTime'])) {
+            $maxWaitTime = (int) $this->config->cutycapt['maxWaitTime'];
+        }
+
+        $parameters = '';
+        if (isset($this->config->cutycapt['parameters'])) {
+            $parameters = $this->config->cutycapt['parameters'];
+        }
 
         $serverNumber = $this->getServerNumber($options);
         $tmpPath = $img->getPath() . '-tmp';
@@ -95,6 +104,9 @@ class Adapter_Cutycapt
             . ' --min-width=' . $options->values['bwidth'];
         if ($options->values['bheight'] !== null) {
             $cmd .= ' --min-height=' . $options->values['bheight'];
+        }
+        if (strlen($parameters) > 0) {
+            $cmd .= ' ' . $parameters;
         }
 
         $xvfbcmd = 'xvfb-run'
