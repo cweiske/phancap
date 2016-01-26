@@ -43,9 +43,14 @@ Basic setup
 ===========
 #. Download the ``.phar`` file and put it onto your web server
 #. Open the phar file in your browser
+
+   If you only see text beginning with ``<?php``, you need to
+   `setup .phar file extension handling`__ in your web server first.
 #. Click the "setup check" link
 #. Fix all errors that are reported
 #. Run ``phancap.phar/get.php?url=cweiske.de`` and see the screenshot
+
+__ http://cweiske.de/tagebuch/phar-webserver.htm
 
 
 Advanced setup
