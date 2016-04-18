@@ -158,12 +158,18 @@ class Config
      */
     protected function loadConfigFilePaths()
     {
-        $pharFile = \Phar::running();
-        if ($pharFile == '') {
-            $this->cfgFiles[] = __DIR__ . '/../../data/phancap.config.php';
-        } else {
+        $phar = false;
+        if (class_exists('\\Phar')) {
+            $pharFile = \Phar::running();
+            if ($pharFile != '') {
+                $phar = true;
+            }
+        }
+        if ($phar) {
             //remove phar:// from the path
             $this->cfgFiles[] = substr($pharFile, 7) . '.config.php';
+        } else {
+            $this->cfgFiles[] = __DIR__ . '/../../data/phancap.config.php';
         }
 
         //TODO: add ~/.config/phancap.php
@@ -235,7 +241,7 @@ class Config
         if (substr($url, -1) != '/') {
             $url = substr($url, 0, -strlen(basename($url)) - 1);
         }
-        if (\Phar::running()) {
+        if (class_exists('\\Phar') && \Phar::running()) {
             //remove .phar file name
             $url = substr($url, 0, -strlen(basename($url)) - 1);
         }
