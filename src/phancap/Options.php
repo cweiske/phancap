@@ -144,7 +144,11 @@ class Options
                 continue;
             }
 
-            if ($arOption['type'] == 'url') {
+            if ($arValues[$name] === ''
+                && !isset($arOption['required'])
+            ) {
+                //allow empty value; default value will be used
+            } else if ($arOption['type'] == 'url') {
                 $this->values[$name] = $this->validateUrl($arValues[$name]);
             } else if ($arOption['type'] == 'int') {
                 $this->values[$name] = $this->validateInt(
