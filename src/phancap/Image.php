@@ -77,7 +77,7 @@ class Image
             return 'image/jpeg';
         } else if ($ext == '.png') {
             return 'image/png';
-        } else if ($ext == '.png') {
+        } else if ($ext == '.pdf') {
             return 'application/pdf';
         }
         return 'application/octet-stream';
