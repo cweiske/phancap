@@ -61,10 +61,14 @@ try {
     $img = $rep->getImage($options);
     if ($config->redirect) {
         header('HTTP/1.0 302 Found');
+        header('phancap-file: ' . $img->name);
         header('Expires: ' . date('r', $img->getExpiryDate($options)));
         header('Location: ' . $img->getUrl());
     } else {
-        header('Content-type: ' . $img->getMimeType());
+        header('HTTP/1.0 200 OK');
+        header('phancap-file: ' . $img->name);
+        header('Content-Type: ' . $img->getMimeType());
+        header('Content-Length: ' . filesize($img->getPath()));
         readfile($img->getPath());
     }
 } catch (\Exception $e) {
