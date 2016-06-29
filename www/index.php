@@ -30,9 +30,8 @@ try {
 } catch (\Exception $e) {
 }
 ?>
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
  <head>
   <title>phancap</title>
 
@@ -68,9 +67,9 @@ try {
          <?php } else if ($config->access !== true) { ?>
           <div class="alert alert-warning">API requires authentication</div>
          <?php } ?>
-         <form method="get" action="./get.php" class="form-inline" role="form">
+         <form method="get" action="./get.php" class="form-inline">
           <div class="form-group">
-           <label for="url" class="sr-only">URL:</label>
+           <label for="url">URL:</label>
            <input type="text" name="url" id="url" class="form-control"
                   placeholder="http://example.org/" />
           </div>
@@ -116,16 +115,16 @@ try {
 <?php
 foreach ($options->options as $name => $option) {
     echo '<tr>'
-        . '<td><tt>' . $name . '</tt></td>'
+        . '<td><var>' . $name . '</var></td>'
         . '<td>' . htmlspecialchars($option['title']) . '</td>'
         . '<td>'
         . (
             is_array($option['type'])
-            ? ('One of: <tt>' . implode('</tt>, <tt>', $option['type']) . '</tt>')
+            ? ('One of: <kbd>' . implode('</kbd>, <kbd>', $option['type']) . '</kbd>')
             : str_replace('skip', '&#160;', $option['type'])
         )
         . '</td>'
-        . '<td>&#160;<tt>' . $option['default'] . '</tt></td>'
+        . '<td>&#160;<kbd>' . $option['default'] . '</kbd></td>'
         . '</tr>';
 }
 ?>
@@ -136,10 +135,10 @@ foreach ($options->options as $name => $option) {
       Ages can be given as ISO 8601 duration specification, for example:
      </p>
      <dl class="dl-horizontal">
-      <dt><tt>P1Y</tt></dt><dd>1 year</dd>
-      <dt><tt>P2W</tt></dt><dd>2 weeks</dd>
-      <dt><tt>P1D</tt></dt><dd>1 day</dd>
-      <dt><tt>PT4H</tt></dt><dd>4 hours</dd>
+      <dt><kbd>P1Y</kbd></dt><dd>1 year</dd>
+      <dt><kbd>P2W</kbd></dt><dd>2 weeks</dd>
+      <dt><kbd>P1D</kbd></dt><dd>1 day</dd>
+      <dt><kbd>PT4H</kbd></dt><dd>4 hours</dd>
      </dl>
 
     </div>

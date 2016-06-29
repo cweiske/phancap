@@ -9,3 +9,6 @@ h2 {
     text-align: center;
     clear: both;
 }
+var {
+    font-family: monospace;
+}
