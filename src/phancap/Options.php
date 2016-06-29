@@ -152,11 +152,12 @@ class Options
                 $this->values[$name] = $this->validateUrl($arValues[$name]);
             } else if ($arOption['type'] == 'int') {
                 $this->values[$name] = $this->validateInt(
-                    $arValues[$name], $arOption['min'], $arOption['max']
+                    $name, $arValues[$name],
+                    $arOption['min'], $arOption['max']
                 );
             } else if (gettype($arOption['type']) == 'array') {
                 $this->values[$name] = $this->validateArray(
-                    $arValues[$name], $arOption['type']
+                    $name, $arValues[$name], $arOption['type']
                 );
             } else if ($arOption['type'] == 'age') {
                 $this->values[$name] = $this->clamp(
@@ -283,17 +284,18 @@ class Options
     /**
      * Check that a given value exists in an array
      *
+     * @param string $name    Variable name
      * @param string $value   Value to check
      * @param array  $options Array of allowed values
      *
      * @return string Value
      * @throws \InvalidArgumentException If the value does not exist in $options
      */
-    protected function validateArray($value, $options)
+    protected function validateArray($name, $value, $options)
     {
         if (array_search($value, $options) === false) {
             throw new \InvalidArgumentException(
-                'Invalid value ' . $value . '.'
+                'Invalid value ' . $value . ' for ' . $name . '.'
                 . ' Allowed: ' . implode(', ', $options)
             );
         }
@@ -303,6 +305,7 @@ class Options
     /**
      * Validate that a value is numeric and between $min and $max (inclusive)
      *
+     * @param string  $name  Variable name
      * @param string  $value Value to check
      * @param integer $min   Minimum allowed value
      * @param integer $max   Maximum allowed value
@@ -310,11 +313,11 @@ class Options
      * @return integer Value as integer
      * @throws \InvalidArgumentException When outside range or not numeric
      */
-    protected function validateInt($value, $min, $max)
+    protected function validateInt($name, $value, $min, $max)
     {
         if (!is_numeric($value)) {
             throw new \InvalidArgumentException(
-                'Value must be a number'
+                $name . ' value must be a number'
             );
         }
         $value = (int) $value;
@@ -331,6 +334,9 @@ class Options
      */
     protected function validateUrl($url)
     {
+        if ($url === '') {
+            throw new \InvalidArgumentException('URL is empty');
+        }
         $parts = parse_url($url);
         if ($parts === false) {
             throw new \InvalidArgumentException('Invalid URL');
