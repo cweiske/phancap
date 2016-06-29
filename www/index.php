@@ -141,6 +141,95 @@ foreach ($options->options as $name => $option) {
       <dt><kbd>PT4H</kbd></dt><dd>4 hours</dd>
      </dl>
 
+
+     <h2 id="complex">Complex request</h2>
+     <form method="get" action="./get.php" class="form-horizontal">
+      <div class="form-group">
+       <label for="url2" class="col-sm-3 control-label">URL</label>
+       <div class="col-sm-9">
+        <input type="text" name="url" id="url2" class="form-control"
+               placeholder="http://example.org/" />
+       </div>
+      </div>
+
+      <div class="form-group">
+       <label class="col-sm-3 control-label">Mode</label>
+       <div class="col-sm-9">
+        <label class="radio-inline">
+         <input type="radio" name="smode" value="screen" checked="checked"/> screen
+        </label>
+        <label class="radio-inline">
+         <input type="radio" name="smode" value="page"/> page
+        </label>
+       </div>
+      </div>
+
+      <div class="form-group">
+       <label class="col-sm-3 control-label">Format</label>
+       <div class="col-sm-9">
+        <label class="radio-inline">
+         <input type="radio" name="sformat" value="png" checked="checked"/> png
+        </label>
+        <label class="radio-inline">
+         <input type="radio" name="sformat" value="jpg"/> jpg
+        </label>
+        <label class="radio-inline">
+         <input type="radio" name="sformat" value="pdf"/> pdf
+        </label>
+       </div>
+      </div>
+
+      <div class="form-group">
+       <label class="col-sm-3 control-label">Browser size</label>
+       <div class="col-sm-9">
+        <div class="row">
+         <div class="col-xs-3">
+          <input type="number" name="bwidth" class="form-control"
+                 placeholder="width"/>
+         </div>
+         <div class="col-xs-3">
+          <input type="number" name="bheight" class="form-control"
+                 placeholder="height"/>
+         </div>
+        </div>
+       </div>
+      </div>
+
+      <div class="form-group">
+       <label class="col-sm-3 control-label">Screenshot size</label>
+       <div class="col-sm-9">
+        <div class="row">
+         <div class="col-xs-3">
+          <input type="number" name="swidth" class="form-control"
+                 placeholder="width"/>
+         </div>
+         <div class="col-xs-3">
+          <input type="number" name="sheight" class="form-control"
+                 placeholder="height"/>
+         </div>
+        </div>
+       </div>
+      </div>
+
+      <div class="form-group">
+       <label for="smaxage" class="col-sm-3 control-label">Maximum age</label>
+       <div class="col-sm-9">
+        <div class="row">
+         <div class="col-xs-2">
+          <input type="text" name="smaxage" id="smaxage" class="form-control"
+                 placeholder="P1Y" />
+         </div>
+        </div>
+       </div>
+      </div>
+
+      <div class="form-group">
+       <div class="col-sm-offset-3 col-sm-9">
+        <button type="submit" class="btn btn-primary">Create screenshot</button>
+       </div>
+      </div>
+     </form>
+
     </div>
    </div>
   </div>
