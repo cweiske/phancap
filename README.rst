@@ -278,7 +278,10 @@ Dependencies
   - PEAR's ``System.php``
 
 
-=======
+=============
+About phancap
+=============
+
 License
 =======
 ``phancap`` is licensed under the `AGPL v3`__ or later.
@@ -286,7 +289,6 @@ License
 __ http://www.gnu.org/licenses/agpl.html
 
 
-========
 Homepage
 ========
 Web site
@@ -298,7 +300,6 @@ Source code
    Mirror: https://github.com/cweiske/phancap
 
 
-======
 Author
 ======
 Written by Christian Weiske, cweiske@cweiske.de
@@ -311,3 +312,17 @@ All of those are open source:
 
 * http://code.google.com/p/browsershots/ (python)
 * https://github.com/gre/screenshot-webservice (scala)
+
+
+===========
+Development
+===========
+
+Releasing a new version
+=======================
+
+#. Update ``ChangeLog``
+#. Change version number in ``build.xml``
+#. Run ``phing``
+#. Deploy the new files in ``dist/``
+#. Tag the new version in git
