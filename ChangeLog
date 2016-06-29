@@ -1,3 +1,12 @@
+2016-06-29  Christian Weiske  <cweiske@cweiske.de>
+
+	* Add form to make a complex request from your browser
+	* Prevent infinite loop when phancap tries to capture itself
+	* Fix .pdf MIME type
+	* Improve HTTP headers when sending out images
+	* Improve parameter validation, allow empty parameter values
+	* Release version 0.3.0
+
 2014-11-06  Christian Weiske  <cweiske@cweiske.de>
 
 	* Kill cutycapt after some time
