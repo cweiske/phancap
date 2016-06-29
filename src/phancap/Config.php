@@ -234,7 +234,7 @@ class Config
      * @return string Directory of URL without trailing slash,
      *                and without .phar file
      */
-    protected function getCurrentUrlDir()
+    public function getCurrentUrlDir()
     {
         $url = $this->getCurrentUrl();
         $url = preg_replace('/\?.*$/', '', $url);

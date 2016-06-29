@@ -46,6 +46,15 @@ try {
     exit(1);
 }
 
+if (strpos($_SERVER['HTTP_USER_AGENT'], ' cutycapt ') !== false) {
+    //phancap is trying to render a page with an image that
+    // is being fetched from phancap itself, leading to an
+    // infinite loop
+    header('HTTP/1.0 500 Infinite Loop');
+    header('Location: ' . $config->getCurrentUrlDir() . '/infinite.png');
+    exit(3);
+}
+
 $rep = new Repository();
 $rep->setConfig($config);
 try {
