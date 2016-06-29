@@ -70,8 +70,8 @@ try {
          <?php } ?>
          <form method="get" action="./get.php" class="form-inline" role="form">
           <div class="form-group">
-           <label for="url">URL:</label>
-           <input type="text" name="url" id="url" size="30" class="form-control"
+           <label for="url" class="sr-only">URL:</label>
+           <input type="text" name="url" id="url" class="form-control"
                   placeholder="http://example.org/" />
           </div>
           <button type="submit" class="btn btn-default">Go</button>
