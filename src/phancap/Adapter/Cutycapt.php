@@ -117,6 +117,11 @@ class Adapter_Cutycapt
         // we kill it if it does not exit itself
         Executor::runForSomeTime($xvfbcmd . ' ' . $cmd, $maxWaitTime);
 
+        //cutycapt does not report timeouts via exit status
+        if (!file_exists($tmpPath)) {
+            throw new \Exception('Error running cutycapt (wait timeout)', 1);
+        }
+
         $this->resize($tmpPath, $img, $options);
     }
 
