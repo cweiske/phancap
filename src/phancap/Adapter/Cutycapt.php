@@ -118,6 +118,7 @@ class Adapter_Cutycapt
         Executor::runForSomeTime($xvfbcmd . ' ' . $cmd, $maxWaitTime);
 
         //cutycapt does not report timeouts via exit status
+        // https://sourceforge.net/p/cutycapt/bugs/11/
         if (!file_exists($tmpPath)) {
             throw new \Exception('Error running cutycapt (wait timeout)', 1);
         }
