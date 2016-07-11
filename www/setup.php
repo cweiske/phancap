@@ -82,11 +82,18 @@ foreach ($adapter as $classpart) {
     }
 }
 
+if (!function_exists('idn_to_ascii')) {
+    $messages[][] = array(
+        'err', 'Function "idn_to_ascii" is not available'
+    );
+}
+
 $out = <<<HTM
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
  <head>
   <title>phancap setup check</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" href="css/bootstrap.min.css"/>
   <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
   <link rel="stylesheet" href="css/phancap.css"/>

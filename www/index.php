@@ -34,7 +34,7 @@ try {
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
  <head>
   <title>phancap</title>
-
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" href="css/bootstrap.min.css"/>
   <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
   <link rel="stylesheet" href="css/phancap.css"/>
