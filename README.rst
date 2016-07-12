@@ -26,6 +26,10 @@ Features
 * JPG, PNG and PDF output (PDFs are searchable)
 * Authentication
 * Can run on a normal web server without GUI. See dependencies_.
+* Generated images get meta data embedded:
+
+  * URL of captured page
+  * Capture settings
 
 
 .. note::
@@ -270,6 +274,7 @@ Dependencies
 - External tools:
 
   - `cutycapt <http://cutycapt.sourceforge.net/>`_
+  - `exiftool <http://owl.phy.queensu.ca/~phil/exiftool/>`_
   - `imagemagick's <http://www.imagemagick.org/>`_ ``convert``
   - ``xvfb-run``
 

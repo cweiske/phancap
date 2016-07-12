@@ -1,3 +1,10 @@
+2016-07-12  Christian Weiske  <cweiske@cweiske.de>
+
+	* Add support for internationalized domain names (IDNA)
+	* Add meta data into generated images
+	* Fix bug with cutycapt timeouts
+	* Release version 0.4.0
+
 2016-06-29  Christian Weiske  <cweiske@cweiske.de>
 
 	* Add form to make a complex request from your browser
