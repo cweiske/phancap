@@ -87,6 +87,11 @@ if (!function_exists('idn_to_ascii')) {
         'err', 'Function "idn_to_ascii" is not available'
     );
 }
+if (\System::which('exiftool') === false) {
+    $messages[][] = array(
+        'err', '"exiftool" is not installed'
+    );
+}
 
 $out = <<<HTM
 <!DOCTYPE html>

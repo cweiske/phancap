@@ -115,7 +115,9 @@ class Adapter_Cutycapt
             . ' --server-num=' . $serverNumber;
         //cutycapt hangs sometimes - https://sourceforge.net/p/cutycapt/bugs/8/
         // we kill it if it does not exit itself
-        Executor::runForSomeTime($xvfbcmd . ' ' . $cmd, $maxWaitTime);
+        Executor::runForSomeTime(
+            $xvfbcmd . ' ' . $cmd, $maxWaitTime, 'cutycapt'
+        );
 
         //cutycapt does not report timeouts via exit status
         // https://sourceforge.net/p/cutycapt/bugs/11/
@@ -218,8 +220,7 @@ class Adapter_Cutycapt
             . ' -resize ' . $options->values['swidth']
             . $crop
             . ' ' . escapeshellarg($img->getPath());
-        Executor::run($convertcmd);
-        //var_dump($convertcmd);die();
+        Executor::run($convertcmd, 'convert');
         unlink($tmpPath);
     }
 

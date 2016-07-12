@@ -111,6 +111,9 @@ class Repository
             $adapter->cleanup();
             throw $e;
         }
+
+        $meta = new MetaData();
+        $meta->embed($img, $options);
     }
 
     /**

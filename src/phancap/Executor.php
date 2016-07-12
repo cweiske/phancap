@@ -29,18 +29,19 @@ class Executor
     /**
      * Run a shell command and check exit code.
      *
-     * @param string $cmd Full command including parameters and options
+     * @param string $cmd  Full command including parameters and options
+     * @param string $name Command name for exception
      *
      * @return void
      * @throws \Exception When the exit code is not 0
      */
-    public static function run($cmd)
+    public static function run($cmd, $name)
     {
         exec($cmd . ' 2>&1', $arOutput, $exitcode);
         if ($exitcode != 0) {
             //FIXME: do something with $arOutput
             //echo implode("\n", $arOutput) . "\n";
-            throw new \Exception('Error running cutycapt', $exitcode);
+            throw new \Exception('Error running ' . $name, $exitcode);
         }
     }
 
@@ -50,15 +51,18 @@ class Executor
      * We use the GNU coreutils "timeout" utility instead of the pcntl
      * extension since pcntl is disabled on mod_php.
      *
-     * @param string $cmd Full command including parameters and options
+     * @param string $cmd     Full command including parameters and options
+     * @param int    $seconds Number of seconds after which the cmd is killed
+     * @param string $name    Command name for exception
      *
      * @return void
      * @throws \Exception When the exit code is not 0
      */
-    public static function runForSomeTime($cmd, $seconds)
+    public static function runForSomeTime($cmd, $seconds, $name)
     {
         return static::run(
-            'timeout --signal=9 ' . $seconds . 's ' . $cmd
+            'timeout --signal=9 ' . $seconds . 's ' . $cmd,
+            $name
         );
     }
 }
